@@ -2,7 +2,7 @@ import asyncio
 import os
 from twikit import Client
 from configparser import ConfigParser
-
+from modules.io import readJson, writeJson
 
 # Initialize client
 client = Client('en-US')
@@ -25,6 +25,7 @@ async def main():
             auth_info_2=email,
             password=password
         )
+
         client.save_cookies('cookies.json')
     
     # Upload media files and obtain media_ids
