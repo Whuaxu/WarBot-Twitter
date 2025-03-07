@@ -4,21 +4,22 @@ from twikit import Client
 from configparser import ConfigParser
 from modules.io import readJson, writeJson
 
-# Initialize client
-client = Client('en-US')
-
 config = ConfigParser()
-config.read('config.ini')
+config.read('./private/config.ini')
 
 username = config['X']['username']
 email = config['X']['email']
 password = config['X']['password']
 
 
+# Initialize client
+client = Client('en-US')
+
+
 async def main():
 
-    if os.path.exists('cookies.json'):
-        client.load_cookies('cookies.json')
+    if os.path.exists('./private/cookies.json'):
+        client.load_cookies('./private/cookies.json')
     else:
         await client.login(
             auth_info_1=username,
@@ -26,10 +27,9 @@ async def main():
             password=password
         )
 
-        client.save_cookies('cookies.json')
-    
+        client.save_cookies('./private/cookies.json')
+
     # Upload media files and obtain media_ids
-    
     media_ids = [
         await client.upload_media('./images/template.jpg')
     ]
@@ -40,7 +40,5 @@ async def main():
         text='Example Text',
         media_ids=media_ids
     )
-
-
-
+    
 asyncio.run(main())
